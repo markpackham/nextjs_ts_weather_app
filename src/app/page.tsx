@@ -1,6 +1,7 @@
 "use client";
 
 import Navbar from "@/components/Navbar";
+import axios from "axios";
 import { useQuery } from "react-query";
 
 interface WeatherDetail {
@@ -59,11 +60,22 @@ interface WeatherData {
 }
 
 export default function Home() {
-  const { isLoading, error, data } = useQuery("repoData", async () =>
-    fetch(
-      `https://api.openweathermap.org/data/2.5/forecast?q=london&appid=${process.env.NEXT_PUBLIC_WEATHER_KEY}&cnt=56`
-    ).then((res) => res.json())
+  const { isLoading, error, data } = useQuery<WeatherData>(
+    "repoData",
+    async () => {
+      const { data } = await axios.get(
+        `https://api.openweathermap.org/data/2.5/forecast?q=london&appid=${process.env.NEXT_PUBLIC_WEATHER_KEY}&cnt=56`
+      );
+      return data;
+    }
+
+    // fetch rendered obsolete by using axios instead
+    // fetch(
+    //   `https://api.openweathermap.org/data/2.5/forecast?q=london&appid=${process.env.NEXT_PUBLIC_WEATHER_KEY}&cnt=56`
+    // ).then((res) => res.json())
   );
+
+  console.log("data", data?.city.country);
 
   if (isLoading) return "Loading...";
 
