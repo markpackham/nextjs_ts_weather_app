@@ -75,13 +75,24 @@ export default function Home() {
     // ).then((res) => res.json())
   );
 
-  console.log("data", data?.city.country);
+  if (isLoading)
+    return (
+      <div className="flex items-center min-h-screen justify-center">
+        <p className="animate-bounce">Loading...</p>
+      </div>
+    );
 
-  if (isLoading) return "Loading...";
+  if (error)
+    return (
+      <div className="flex items-center min-h-screen justify-center">
+        <p className="text-red-400">Error</p>
+      </div>
+    );
 
   return (
     <div className="flex flex-col gap-4 bg-gray-100 min-h-screen">
       <Navbar />
+      <main className="px-3 max-w-7xl mx-auto flex flex-col gap-9  w-full  pb-10 pt-4"></main>
     </div>
   );
 }
