@@ -153,6 +153,9 @@ export default function Home() {
                     {/* <p className="whitespace-nowrap">{format(parseISO(dat.dt_txt), "h:mm a")}</p> */}
                     {/* Show with 24 hour clock  */}
                     <p>{format(parseISO(dat.dt_txt), "HH:MM")}</p>
+
+                    {/* Temperature throughout the day */}
+                    <p>{convertKelvinToCelsius(dat?.main.temp ?? 0)}&deg;C</p>
                   </div>
                 ))}
               </div>
