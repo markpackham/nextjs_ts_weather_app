@@ -2,6 +2,7 @@
 
 import Container from "@/components/Container";
 import Navbar from "@/components/Navbar";
+import { convertKelvinToCelsius } from "@/utils/convertKelvinToCelsius";
 import axios from "axios";
 // Convert dates
 import { format, fromUnixTime, parseISO } from "date-fns";
@@ -114,7 +115,15 @@ export default function Home() {
                 {format(parseISO(firstData?.dt_txt ?? ""), "yyyy.MM.dd")})
               </div>
             </h2>
-            <Container />
+            <Container className="gap-10 px-6 items-center">
+              <div className="flex flex-col px-4">
+                <span className="text-5xl">
+                  {/* If we have no data/null then pass a 0 */}
+                  {convertKelvinToCelsius(firstData?.main.temp ?? 0)}&deg;C
+                  <p className="text-xs space-x-1 whitespace-nowrap"></p>
+                </span>
+              </div>
+            </Container>
           </div>
         </section>
         {/* 7 day forecast */}
