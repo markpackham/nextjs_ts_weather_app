@@ -2,6 +2,8 @@
 
 import Navbar from "@/components/Navbar";
 import axios from "axios";
+// Convert dates
+import { format, fromUnixTime, parseISO } from "date-fns";
 import { useQuery } from "react-query";
 
 interface WeatherDetail {
@@ -75,6 +77,9 @@ export default function Home() {
     // ).then((res) => res.json())
   );
 
+  // Today's forecast, firstData
+  const firstData = data?.list[0];
+
   if (isLoading)
     return (
       <div className="flex items-center min-h-screen justify-center">
@@ -92,7 +97,27 @@ export default function Home() {
   return (
     <div className="flex flex-col gap-4 bg-gray-100 min-h-screen">
       <Navbar />
-      <main className="px-3 max-w-7xl mx-auto flex flex-col gap-9  w-full  pb-10 pt-4"></main>
+      <main className="px-3 max-w-7xl mx-auto flex flex-col gap-9  w-full  pb-10 pt-4">
+        {/* Today's forecast */}
+        <section>
+          <div>
+            <h2 className="flex gap-1 text-2xl items-end">
+              {/* // Parse date format to show a day eg "Monday" */}
+              <div>{format(parseISO(firstData?.dt_txt ?? ""), "EEEE")}</div>
+              <div className="text-lg">
+                - UK Date Format: (
+                {format(parseISO(firstData?.dt_txt ?? ""), "dd.MM.yyyy")})
+              </div>
+              <div className="text-lg">
+                -- Record Keeping Format (
+                {format(parseISO(firstData?.dt_txt ?? ""), "yyyy.MM.dd")})
+              </div>
+            </h2>
+          </div>
+        </section>
+        {/* 7 day forecast */}
+        <section></section>
+      </main>
     </div>
   );
 }
