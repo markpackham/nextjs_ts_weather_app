@@ -70,7 +70,7 @@ export default function Home() {
     "repoData",
     async () => {
       const { data } = await axios.get(
-        `https://api.openweathermap.org/data/2.5/forecast?q=london&appid=${process.env.NEXT_PUBLIC_WEATHER_KEY}&cnt=56`
+        `https://api.openweathermap.org/data/2.5/forecast?q=edinburgh&appid=${process.env.NEXT_PUBLIC_WEATHER_KEY}&cnt=56`
       );
       return data;
     }
@@ -117,6 +117,7 @@ export default function Home() {
                 {format(parseISO(firstData?.dt_txt ?? ""), "yyyy.MM.dd")})
               </div>
             </h2>
+
             <Container className="gap-10 px-6 items-center">
               {/* Temperature */}
               <div className="flex flex-col px-4">
@@ -144,6 +145,7 @@ export default function Home() {
                   </p>
                 </span>
               </div>
+
               {/* Time & Weather icon */}
               <div className="flex gap-10 sm:gap-16 overflow-x-auto w-full justify-between pr-3">
                 {data?.list.map((dat, index) => (
@@ -173,9 +175,29 @@ export default function Home() {
               </div>
             </Container>
           </div>
+          <div className="flex gap-4">
+            {/* Left Container */}
+            <Container className="w-fit justify-center flex-col px-4 items-center">
+              <p className="capitalize text-center">
+                {firstData?.weather[0].description}
+              </p>
+              <WeatherIcon
+                iconName={getDayOrNightIcon(
+                  firstData?.weather[0].icon ?? "",
+                  firstData?.dt_txt ?? ""
+                )}
+              />
+            </Container>
+
+            {/* Right Container */}
+            <Container className="bg-yellow-300/80 px-6 gap-4 justify-between overflow-x-auto"></Container>
+          </div>
         </section>
+
         {/* 7 day forecast */}
-        <section></section>
+        <section className="flex w-full flex-col gap-4">
+          <p className="text-2xl">7 Day Forecast</p>
+        </section>
       </main>
     </div>
   );
