@@ -101,8 +101,8 @@ export default function Home() {
       <Navbar />
       <main className="px-3 max-w-7xl mx-auto flex flex-col gap-9  w-full  pb-10 pt-4">
         {/* Today's forecast */}
-        <section>
-          <div>
+        <section className="space-y-4">
+          <div className="space-y-2">
             <h2 className="flex gap-1 text-2xl items-end">
               {/* // Parse date format to show a day eg "Monday" */}
               <div>{format(parseISO(firstData?.dt_txt ?? ""), "EEEE")}</div>
@@ -120,7 +120,25 @@ export default function Home() {
                 <span className="text-5xl">
                   {/* If we have no data/null then pass a 0 */}
                   {convertKelvinToCelsius(firstData?.main.temp ?? 0)}&deg;C
-                  <p className="text-xs space-x-1 whitespace-nowrap"></p>
+                  <p className="text-xs space-x-1 whitespace-nowrap">
+                    <span> Feels like </span>
+                    <span>
+                      {" "}
+                      {convertKelvinToCelsius(firstData?.main.feels_like ?? 0)}
+                      &deg;C
+                    </span>
+                  </p>
+                  <p className="text-xs space-x-2">
+                    <span>
+                      {convertKelvinToCelsius(firstData?.main.temp_min ?? 0)}
+                      &deg;C Min
+                    </span>
+                    <span>
+                      {" "}
+                      {convertKelvinToCelsius(firstData?.main.temp_max ?? 0)}
+                      &deg;C Max
+                    </span>
+                  </p>
                 </span>
               </div>
             </Container>
