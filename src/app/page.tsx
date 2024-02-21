@@ -132,16 +132,13 @@ export default function Home() {
                       &deg;C
                     </span>
                   </p>
-                  <p className="text-xs space-x-2">
-                    <span>
-                      {convertKelvinToCelsius(firstData?.main.temp_min ?? 0)}
-                      &deg;C Min
-                    </span>
-                    <span>
-                      {" "}
-                      {convertKelvinToCelsius(firstData?.main.temp_max ?? 0)}
-                      &deg;C Max
-                    </span>
+                  <p className="text-xs space-x-1">
+                    {convertKelvinToCelsius(firstData?.main.temp_min ?? 0)}
+                    &deg;C Min
+                  </p>
+                  <p className="text-xs space-x-1">
+                    {convertKelvinToCelsius(firstData?.main.temp_max ?? 0)}
+                    &deg;C Max
                   </p>
                 </span>
               </div>
