@@ -12,6 +12,7 @@ export interface WeatherDetailProps {
   sunset: string;
 }
 
+// Default values if we don't have anything passed
 export default function WeatherDetails(props: WeatherDetailProps) {
   const {
     visability = "25km",

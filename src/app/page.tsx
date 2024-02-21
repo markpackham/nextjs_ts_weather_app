@@ -5,6 +5,7 @@ import Navbar from "@/components/Navbar";
 import WeatherDetails from "@/components/WeatherDetails";
 import WeatherIcon from "@/components/WeatherIcon";
 import { convertKelvinToCelsius } from "@/utils/convertKelvinToCelsius";
+import { convertWindSpeed } from "@/utils/convertWindSpeed";
 import { getDayOrNightIcon } from "@/utils/getDayOrNightIcon";
 import { metersToKilometers } from "@/utils/metersToKilometers";
 import axios from "axios";
@@ -195,6 +196,16 @@ export default function Home() {
                 visability={metersToKilometers(firstData?.visibility ?? 10000)}
                 // Pressure is measured in hectoPascals (hPa), also called millibars
                 airPressure={`${firstData?.main.pressure} hPa`}
+                humidity={`${firstData?.main.humidity}%`}
+                sunrise={format(
+                  fromUnixTime(data?.city.sunrise ?? 1702949452),
+                  "H:mm"
+                )}
+                sunset={format(
+                  fromUnixTime(data?.city.sunset ?? 1702517657),
+                  "H:mm"
+                )}
+                windSpeed={convertWindSpeed(firstData?.wind.speed ?? 1.64)}
               />
             </Container>
           </div>
