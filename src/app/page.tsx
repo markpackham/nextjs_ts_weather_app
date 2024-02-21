@@ -4,6 +4,7 @@ import Container from "@/components/Container";
 import Navbar from "@/components/Navbar";
 import WeatherIcon from "@/components/WeatherIcon";
 import { convertKelvinToCelsius } from "@/utils/convertKelvinToCelsius";
+import { getDayOrNightIcon } from "@/utils/getDayOrNightIcon";
 import axios from "axios";
 // Convert dates
 import { format, fromUnixTime, parseISO } from "date-fns";
@@ -155,7 +156,15 @@ export default function Home() {
                     {/* Show with 24 hour clock  */}
                     <p>{format(parseISO(dat.dt_txt), "HH:MM")}</p>
 
-                    <WeatherIcon iconName={dat.weather[0].icon} />
+                    {/* Default if we had no day/night icon function */}
+                    {/* <WeatherIcon iconName={dat.weather[0].icon} /> */}
+
+                    <WeatherIcon
+                      iconName={getDayOrNightIcon(
+                        dat.weather[0].icon,
+                        dat.dt_txt
+                      )}
+                    />
 
                     {/* Temperature throughout the day */}
                     <p>{convertKelvinToCelsius(dat?.main.temp ?? 0)}&deg;C</p>
