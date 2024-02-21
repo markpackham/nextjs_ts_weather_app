@@ -2,9 +2,11 @@
 
 import Container from "@/components/Container";
 import Navbar from "@/components/Navbar";
+import WeatherDetails from "@/components/WeatherDetails";
 import WeatherIcon from "@/components/WeatherIcon";
 import { convertKelvinToCelsius } from "@/utils/convertKelvinToCelsius";
 import { getDayOrNightIcon } from "@/utils/getDayOrNightIcon";
+import { metersToKilometers } from "@/utils/metersToKilometers";
 import axios from "axios";
 // Convert dates
 import { format, fromUnixTime, parseISO } from "date-fns";
@@ -187,7 +189,14 @@ export default function Home() {
             </Container>
 
             {/* Right Container */}
-            <Container className="bg-yellow-300/80 px-6 gap-4 justify-between overflow-x-auto"></Container>
+            <Container className="bg-yellow-300/80 px-6 gap-4 justify-between overflow-x-auto">
+              <WeatherDetails
+                // 10000 is the default visability if we get null
+                visability={metersToKilometers(firstData?.visibility ?? 10000)}
+                // Pressure is measured in hectoPascals (hPa), also called millibars
+                airPressure={`${firstData?.main.pressure} hPa`}
+              />
+            </Container>
           </div>
         </section>
 
