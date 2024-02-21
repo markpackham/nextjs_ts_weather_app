@@ -116,6 +116,7 @@ export default function Home() {
               </div>
             </h2>
             <Container className="gap-10 px-6 items-center">
+              {/* Temperature */}
               <div className="flex flex-col px-4">
                 <span className="text-5xl">
                   {/* If we have no data/null then pass a 0 */}
@@ -140,6 +141,20 @@ export default function Home() {
                     </span>
                   </p>
                 </span>
+              </div>
+              {/* Time & Weather icon */}
+              <div className="flex gap-10 sm:gap-16 overflow-x-auto w-full justify-between pr-3">
+                {data?.list.map((dat, index) => (
+                  <div
+                    key={index}
+                    className="flex flex-col justify-between gap-2 items-center text-xs font-semibold"
+                  >
+                    {/* Show time with AM or PM */}
+                    {/* <p className="whitespace-nowrap">{format(parseISO(dat.dt_txt), "h:mm a")}</p> */}
+                    {/* Show with 24 hour clock  */}
+                    <p>{format(parseISO(dat.dt_txt), "HH:MM")}</p>
+                  </div>
+                ))}
               </div>
             </Container>
           </div>
