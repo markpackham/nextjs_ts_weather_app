@@ -1,5 +1,6 @@
 "use client";
 
+import Container from "@/components/Container";
 import Navbar from "@/components/Navbar";
 import axios from "axios";
 // Convert dates
@@ -113,6 +114,7 @@ export default function Home() {
                 {format(parseISO(firstData?.dt_txt ?? ""), "yyyy.MM.dd")})
               </div>
             </h2>
+            <Container />
           </div>
         </section>
         {/* 7 day forecast */}
