@@ -3,7 +3,7 @@ import { WeatherDetailProps } from "./WeatherDetails";
 import WeatherIcon from "./WeatherIcon";
 
 export interface ForecastWeatherDetailProps extends WeatherDetailProps {
-  weatehrIcon: string;
+  weatherIcon: string;
   date: string;
   day: string;
   temp: number;
@@ -13,12 +13,28 @@ export interface ForecastWeatherDetailProps extends WeatherDetailProps {
   description: string;
 }
 
-export default function ForecastWeatherDetail({}: ForecastWeatherDetailProps) {
+export default function ForecastWeatherDetail(
+  props: ForecastWeatherDetailProps
+) {
+  // Default props
+  const {
+    weatherIcon = "02d",
+    date = "19.09",
+    day = "Tuesday",
+    temp,
+    feels_like,
+    temp_min,
+    temp_max,
+    description,
+  } = props;
+
   return (
     <Container className="gap-4">
       <section className="flex gap-4 items-center px-4">
         <div>
-          <WeatherIcon />
+          <WeatherIcon iconName={weatherIcon} />
+          <p>{date}</p>
+          <p className="text-sm">{day}</p>
         </div>
       </section>
     </Container>

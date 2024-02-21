@@ -1,6 +1,7 @@
 "use client";
 
 import Container from "@/components/Container";
+import ForecastWeatherDetail from "@/components/ForecastWeatherDetail";
 import Navbar from "@/components/Navbar";
 import WeatherDetails from "@/components/WeatherDetails";
 import WeatherIcon from "@/components/WeatherIcon";
