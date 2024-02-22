@@ -15,6 +15,7 @@ import { format, fromUnixTime, parseISO } from "date-fns";
 import { useAtom } from "jotai";
 import { useQuery } from "react-query";
 import { placeAtom } from "./atom";
+import { useEffect } from "react";
 
 interface WeatherDetail {
   dt: number;
@@ -77,7 +78,7 @@ export default function Home() {
   // Global state for city search which must be at a function level
   const [place, setPlace] = useAtom(placeAtom);
 
-  const { isLoading, error, data } = useQuery<WeatherData>(
+  const { isLoading, error, data, refetch } = useQuery<WeatherData>(
     "repoData",
     async () => {
       const { data } = await axios.get(
@@ -91,6 +92,11 @@ export default function Home() {
     //   `https://api.openweathermap.org/data/2.5/forecast?q=london&appid=${process.env.NEXT_PUBLIC_WEATHER_KEY}&cnt=56`
     // ).then((res) => res.json())
   );
+
+  // Everytime "place" changes useEffect called
+  useEffect(() => {
+    refetch();
+  }, [place, refetch]);
 
   // Today's forecast, firstData
   const firstData = data?.list[0];

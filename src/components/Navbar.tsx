@@ -87,7 +87,7 @@ export default function Navbar({}: Props) {
           <MdMyLocation className="text-2xl text-gray-400 hover:opacity-80 cursor-pointer" />
           <MdOutlineLocationOn className="text-3xl" />
           {/* "text-slate-900/80" the last part means means giving an opacity of 80 */}
-          <p className="text-slate-900/80 text-sm"> UK </p>
+          <p className="text-slate-900/80 text-sm"> </p>
 
           {/* Search Box */}
           <div className="relative">
