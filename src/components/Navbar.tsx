@@ -21,7 +21,22 @@ export default function Navbar({}: Props) {
   const [showSuggestions, setShowSuggestions] = useState(false);
 
   // City Search after suggestion selected
-  function handleSubmitSearch() {}
+  function handleSubmitSearch(e: React.FormEvent<HTMLFormElement>) {
+    setLoadingCity(true);
+    e.preventDefault();
+    // Check if location not found
+    if (suggestions.length == 0) {
+      setError("Location not found");
+      setLoadingCity(false);
+    } else {
+      setError("");
+      setTimeout(() => {
+        setLoadingCity(false);
+        setPlace(city);
+        setShowSuggestions(false);
+      }, 500);
+    }
+  }
 
   // React when city typed in
   async function handleInputChange(value: string) {
