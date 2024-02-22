@@ -155,13 +155,13 @@ export default function Home() {
                   {/* // Parse date format to show a day eg "Monday" */}
                   <div>{format(parseISO(firstData?.dt_txt ?? ""), "EEEE")}</div>
                   <div className="text-lg">
-                    - UK Date Format: (
+                    {/* - UK Date Format:  */}(
                     {format(parseISO(firstData?.dt_txt ?? ""), "dd.MM.yyyy")})
                   </div>
-                  <div className="text-lg">
+                  {/* <div className="text-lg">
                     -- Record Keeping Format (
                     {format(parseISO(firstData?.dt_txt ?? ""), "yyyy.MM.dd")})
-                  </div>
+                  </div> */}
                 </h2>
 
                 <Container className="gap-10 px-6 items-center">

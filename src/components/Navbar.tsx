@@ -105,46 +105,70 @@ export default function Navbar({ location }: Props) {
   }
 
   return (
-    <nav className="shadow-sm sticky top-0 left-0 z-50 bg-white">
-      <div className="h-[80px]     w-full    flex   justify-between items-center  max-w-7xl px-3 mx-auto">
-        <div className="flex items-center justify-center gap-2">
-          <h2 className="text-gray-500 text-3xl">Weather</h2>
-          <MdWbSunny className="text-3xl mt-1 text-yellow-300" />
+    <>
+      <nav className="shadow-sm sticky top-0 left-0 z-50 bg-white">
+        <div className="h-[80px]     w-full    flex   justify-between items-center  max-w-7xl px-3 mx-auto">
+          <div className="flex items-center justify-center gap-2">
+            <h2 className="text-gray-500 text-3xl">Weather</h2>
+            <MdWbSunny className="text-3xl mt-1 text-yellow-300" />
+          </div>
+          <section className="flex gap-2 items-center">
+            <span className="text-sm ml-1">
+              Click on target to get location data &rarr;
+            </span>
+            <MdMyLocation
+              title="Your current location"
+              onClick={handleCurrentLocation}
+              className="text-2xl text-gray-400 hover:opacity-80 cursor-pointer"
+            />
+
+            <MdOutlineLocationOn className="text-3xl" />
+            {/* "text-slate-900/80" the last part means means giving an opacity of 80 */}
+            <p className="text-slate-900/80 text-sm">{location} </p>
+
+            {/* Search Box - hide search on mobile so user can only click on current location for weather*/}
+            <div className="relative hidden md:flex">
+              <SearchBox
+                value={city}
+                onSubmit={handleSubmitSearch}
+                onChange={(e) => handleInputChange(e.target.value)}
+              />
+
+              <SuggestionBox
+                // Use spread operator to avoid having to write all props one by one, error={error}
+                {...{
+                  showSuggestions,
+                  suggestions,
+                  handleSuggestionClick,
+                  error,
+                }}
+              />
+            </div>
+          </section>
         </div>
-        <section className="flex gap-2 items-center">
-          <span className="text-sm ml-1">
-            Click on target to get location data &rarr;
-          </span>
-          <MdMyLocation
-            title="Your current location"
-            onClick={handleCurrentLocation}
-            className="text-2xl text-gray-400 hover:opacity-80 cursor-pointer"
+      </nav>
+
+      {/* Only show on mobile screens */}
+      <section className="flex max-w-7xl px-3 md:hidden">
+        {/* Search Box - hide search on mobile so user can only click on current location for weather*/}
+        <div className="relative">
+          <SearchBox
+            value={city}
+            onSubmit={handleSubmitSearch}
+            onChange={(e) => handleInputChange(e.target.value)}
           />
 
-          <MdOutlineLocationOn className="text-3xl" />
-          {/* "text-slate-900/80" the last part means means giving an opacity of 80 */}
-          <p className="text-slate-900/80 text-sm">{location} </p>
-
-          {/* Search Box - hide it on mobile */}
-          <div className="relative hidden md:flex">
-            <SearchBox
-              value={city}
-              onSubmit={handleSubmitSearch}
-              onChange={(e) => handleInputChange(e.target.value)}
-            />
-
-            <SuggestionBox
-              // Use spreach operator to avoid having to write all props one by one, error={error}
-              {...{
-                showSuggestions,
-                suggestions,
-                handleSuggestionClick,
-                error,
-              }}
-            />
-          </div>
-        </section>
-      </div>
-    </nav>
+          <SuggestionBox
+            // Use spread operator to avoid having to write all props one by one, error={error}
+            {...{
+              showSuggestions,
+              suggestions,
+              handleSuggestionClick,
+              error,
+            }}
+          />
+        </div>
+      </section>
+    </>
   );
 }
