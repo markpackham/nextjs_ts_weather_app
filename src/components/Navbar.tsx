@@ -23,21 +23,24 @@ export default function Navbar({ location }: Props) {
   const [suggestions, setSuggestions] = useState<string[]>([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
 
-  // atom used for Global State
-  const [place, setPlace] = useAtom(placeAtom);
-  const [_, setLoadingCity] = useAtom(loadingCityAtom);
+  // atom used for Global State, using "unusedPlaceholder1" since we don't need a first parameter
+  const [unusedPlaceholder1, setPlace] = useAtom(placeAtom);
+  // Boolean for your loading state
+  const [unusedPlaceholder2, setLoadingCity] = useAtom(loadingCityAtom);
 
   // City Search after suggestion selected
   function handleSubmitSearch(e: React.FormEvent<HTMLFormElement>) {
     setLoadingCity(true);
     e.preventDefault();
     // Check if location not found
-    if (suggestions.length == 0) {
+    if (suggestions.length === 0) {
       setError("Location not found");
       setLoadingCity(false);
     } else {
       setError("");
+      // Time delay added via setTimeout so we can see the loading state in action
       setTimeout(() => {
+        // Data is fetched so hide loading state
         setLoadingCity(false);
         setPlace(city);
         setShowSuggestions(false);

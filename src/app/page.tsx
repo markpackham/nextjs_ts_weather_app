@@ -14,7 +14,7 @@ import axios from "axios";
 import { format, fromUnixTime, parseISO } from "date-fns";
 import { useAtom } from "jotai";
 import { useQuery } from "react-query";
-import { placeAtom } from "./atom";
+import { loadingCityAtom, placeAtom } from "./atom";
 import { useEffect } from "react";
 
 interface WeatherDetail {
@@ -77,6 +77,7 @@ const API_KEY = process.env.NEXT_PUBLIC_WEATHER_KEY;
 export default function Home() {
   // Global state for city search which must be at a function level
   const [place, setPlace] = useAtom(placeAtom);
+  const [unusedPlaceholder2, setLoadingCity] = useAtom(loadingCityAtom);
 
   const { isLoading, error, data, refetch } = useQuery<WeatherData>(
     "repoData",
