@@ -88,6 +88,28 @@ export default function Home() {
   // Today's forecast, firstData
   const firstData = data?.list[0];
 
+  // Get Unique Dates
+  // tsconfig.json needs to be modified in "compilerOptions" so "target": "es2015",
+  // otherwise "Set" won't be recognized
+  const uniqueDates = [
+    ...new Set(
+      data?.list.map(
+        (entry) => new Date(entry.dt * 1000).toISOString().split("T")[0]
+      )
+    ),
+  ];
+
+  // Filter data to get only the first entry after 6 AM for each unique date
+  const firstDataForEachDate = uniqueDates.map((date) => {
+    return data?.list.find((entry) => {
+      // The letter “T” is commonly used as a separator in ISO 8601 date-time format strings
+      // eg 2020-01-22T11:22:22
+      const entryDate = new Date(entry.dt * 1000).toISOString().split("T")[0];
+      const entryTime = new Date(entry.dt * 1000).getHours();
+      return entryDate === date && entryTime >= 6;
+    });
+  });
+
   if (isLoading)
     return (
       <div className="flex items-center min-h-screen justify-center">
@@ -215,7 +237,29 @@ export default function Home() {
         {/* 7 day forecast */}
         <section className="flex w-full flex-col gap-4">
           <p className="text-2xl">7 Day Forecast</p>
-          <ForecastWeatherDetail />
+          <ForecastWeatherDetail
+            key={1}
+            description={""}
+            weatherIcon={"01d"}
+            date={""}
+            day={"EEEE"}
+            feels_like={0}
+            temp={0}
+            temp_max={0}
+            temp_min={0}
+            airPressure={`hPa `}
+            humidity={`% `}
+            sunrise={format(
+              fromUnixTime(data?.city.sunrise ?? 1702517657),
+              "H:mm"
+            )}
+            sunset={format(
+              fromUnixTime(data?.city.sunset ?? 1702517657),
+              "H:mm"
+            )}
+            visability={`${10000} `}
+            windSpeed={`${1.64} `}
+          />
         </section>
       </main>
     </div>
