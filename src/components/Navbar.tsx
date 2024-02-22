@@ -6,6 +6,8 @@ import { MdMyLocation, MdOutlineLocationOn, MdWbSunny } from "react-icons/md";
 import SearchBox from "./SearchBox";
 import { useState } from "react";
 import axios from "axios";
+import { useAtom } from "jotai";
+import { placeAtom } from "@/app/atom";
 
 type Props = { location?: string };
 
@@ -19,6 +21,10 @@ export default function Navbar({}: Props) {
   // Search suggestions
   const [suggestions, setSuggestions] = useState<string[]>([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
+
+  // atom used for Global State
+  const [place, setPlace] = useAtom(placeAtom);
+  const [_, setLoadingCity] = useAtom(loadingCityAtom);
 
   // City Search after suggestion selected
   function handleSubmitSearch(e: React.FormEvent<HTMLFormElement>) {
