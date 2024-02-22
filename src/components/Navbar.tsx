@@ -7,13 +7,14 @@ import SearchBox from "./SearchBox";
 import { useState } from "react";
 import axios from "axios";
 import { useAtom } from "jotai";
-import { placeAtom } from "@/app/atom";
+import { loadingCityAtom, placeAtom } from "@/app/atom";
 
+// Location of the city
 type Props = { location?: string };
 
 const API_KEY = process.env.NEXT_PUBLIC_WEATHER_KEY;
 
-export default function Navbar({}: Props) {
+export default function Navbar({ location }: Props) {
   const [city, setCity] = useState("");
   // In case what we're looking for isn't found
   const [error, setError] = useState("");
@@ -87,7 +88,7 @@ export default function Navbar({}: Props) {
           <MdMyLocation className="text-2xl text-gray-400 hover:opacity-80 cursor-pointer" />
           <MdOutlineLocationOn className="text-3xl" />
           {/* "text-slate-900/80" the last part means means giving an opacity of 80 */}
-          <p className="text-slate-900/80 text-sm"> </p>
+          <p className="text-slate-900/80 text-sm"> {location} </p>
 
           {/* Search Box */}
           <div className="relative">
