@@ -1,12 +1,15 @@
 // 'use client' lets you mark what code runs on the client.
-// It is needed for the Search Box
+// It is needed for the Search Box that the client types in
 "use client";
 
 import { MdMyLocation, MdOutlineLocationOn, MdWbSunny } from "react-icons/md";
 import SearchBox from "./SearchBox";
 import { useState } from "react";
+import axios from "axios";
 
-type Props = {};
+type Props = { location?: string };
+
+const API_KEY = process.env.NEXT_PUBLIC_WEATHER_KEY;
 
 export default function Navbar({}: Props) {
   const [city, setCity] = useState("");
@@ -17,10 +20,39 @@ export default function Navbar({}: Props) {
   const [suggestions, setSuggestions] = useState<string[]>([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
 
-  // Search
+  // City Search
   function handleSubmitSearch() {}
 
-  function handleInputChange() {}
+  // React when city typed in
+  async function handleInputChange(value: string) {
+    setCity(value);
+    // Don't bother searching unless city 3 or more letters long
+    if (value.length >= 3) {
+      try {
+        const response = await axios.get(
+          `https://api.openweathermap.org/data/2.5/find?q=${value}&appid=${API_KEY}`
+        );
+
+        const suggestions = response.data.list.map((item: any) => item.name);
+        setSuggestions(suggestions);
+        // If all is good set error to empty
+        setError("");
+        setShowSuggestions(true);
+      } catch (error) {
+        setSuggestions([]);
+        // Hide suggestions
+        setShowSuggestions(false);
+      }
+    } else {
+      setSuggestions([]);
+      setShowSuggestions(false);
+    }
+  }
+
+  function handleSuggestionClick(value: string) {
+    setCity(value);
+    setShowSuggestions(false);
+  }
 
   return (
     <nav className="shadow-sm sticky top-0 left-0 z-50 bg-white">
