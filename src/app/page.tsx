@@ -12,7 +12,9 @@ import { metersToKilometers } from "@/utils/metersToKilometers";
 import axios from "axios";
 // Convert dates
 import { format, fromUnixTime, parseISO } from "date-fns";
+import { useAtom } from "jotai";
 import { useQuery } from "react-query";
+import { placeAtom } from "./atom";
 
 interface WeatherDetail {
   dt: number;
@@ -72,11 +74,14 @@ interface WeatherData {
 const API_KEY = process.env.NEXT_PUBLIC_WEATHER_KEY;
 
 export default function Home() {
+  // Global state for city search which must be at a function level
+  const [place, setPlace] = useAtom(placeAtom);
+
   const { isLoading, error, data } = useQuery<WeatherData>(
     "repoData",
     async () => {
       const { data } = await axios.get(
-        `https://api.openweathermap.org/data/2.5/forecast?q=edinburgh&appid=${API_KEY}&cnt=56`
+        `https://api.openweathermap.org/data/2.5/forecast?q=${place}&appid=${API_KEY}&cnt=56`
       );
       return data;
     }
