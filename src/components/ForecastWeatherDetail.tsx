@@ -33,7 +33,7 @@ export default function ForecastWeatherDetail(
     <Container className="gap-4">
       {/* Left section */}
       <section className="flex gap-4 items-center px-4">
-        <div>
+        <div className="flex flex-col gap-1 items-center">
           <WeatherIcon iconName={weatherIcon} />
           <p>{date}</p>
           <p className="text-sm">{day}</p>

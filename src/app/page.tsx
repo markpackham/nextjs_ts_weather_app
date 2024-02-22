@@ -237,29 +237,33 @@ export default function Home() {
         {/* 7 day forecast */}
         <section className="flex w-full flex-col gap-4">
           <p className="text-2xl">7 Day Forecast</p>
-          <ForecastWeatherDetail
-            key={1}
-            description={""}
-            weatherIcon={"01d"}
-            date={""}
-            day={"EEEE"}
-            feels_like={0}
-            temp={0}
-            temp_max={0}
-            temp_min={0}
-            airPressure={`hPa `}
-            humidity={`% `}
-            sunrise={format(
-              fromUnixTime(data?.city.sunrise ?? 1702517657),
-              "H:mm"
-            )}
-            sunset={format(
-              fromUnixTime(data?.city.sunset ?? 1702517657),
-              "H:mm"
-            )}
-            visability={`${10000} `}
-            windSpeed={`${1.64} `}
-          />
+          {/* D is the supplied data*/}
+          {firstDataForEachDate.map((d, index) => (
+            <ForecastWeatherDetail
+              key={index}
+              description={d?.weather[0].description ?? ""}
+              weatherIcon={d?.weather[0].icon ?? "01d"}
+              date={d ? format(parseISO(d.dt_txt), "dd.MM") : ""}
+              day={d ? format(parseISO(d.dt_txt), "dd.MM") : "EEEE"}
+              feels_like={d?.main.feels_like ?? 0}
+              temp={d?.main.temp ?? 0}
+              temp_max={d?.main.temp_max ?? 0}
+              temp_min={d?.main.temp_min ?? 0}
+              airPressure={`${d?.main.pressure} hPa `}
+              humidity={`${d?.main.humidity}% `}
+              sunrise={format(
+                // Using the Global data & not one specific to firstDataForEachDate
+                fromUnixTime(data?.city.sunrise ?? 1702517657),
+                "H:mm"
+              )}
+              sunset={format(
+                fromUnixTime(data?.city.sunset ?? 1702517657),
+                "H:mm"
+              )}
+              visability={`${metersToKilometers(d?.visibility ?? 10000)} `}
+              windSpeed={`${convertWindSpeed(d?.wind.speed ?? 1.64)} `}
+            />
+          ))}
         </section>
       </main>
     </div>
