@@ -1,5 +1,6 @@
+import { convertKelvinToCelsius } from "@/utils/convertKelvinToCelsius";
 import Container from "./Container";
-import { WeatherDetailProps } from "./WeatherDetails";
+import WeatherDetails, { WeatherDetailProps } from "./WeatherDetails";
 import WeatherIcon from "./WeatherIcon";
 
 export interface ForecastWeatherDetailProps extends WeatherDetailProps {
@@ -23,19 +24,42 @@ export default function ForecastWeatherDetail(
     day = "Tuesday",
     temp,
     feels_like,
-    temp_min,
-    temp_max,
+    temp_min = 273.15,
+    temp_max = 273.15,
     description,
   } = props;
 
   return (
     <Container className="gap-4">
+      {/* Left section */}
       <section className="flex gap-4 items-center px-4">
         <div>
           <WeatherIcon iconName={weatherIcon} />
           <p>{date}</p>
           <p className="text-sm">{day}</p>
         </div>
+
+        <div className="flex flex-col px-4">
+          <span className="text-5xl">{convertKelvinToCelsius(temp ?? 0)}°</span>
+          <p className="text-xs space-x-1 whitespace-nowrap">
+            <span> Feels like</span>
+            <span>{convertKelvinToCelsius(feels_like ?? 0)}°</span>
+          </p>
+          <p className="text-xs space-x-1">
+            {convertKelvinToCelsius(temp_min ?? 0)}
+            &deg;C Min
+          </p>
+          <p className="text-xs space-x-1">
+            {convertKelvinToCelsius(temp_max ?? 0)}
+            &deg;C Max
+          </p>
+          <p className="capitalize"> {description}</p>
+        </div>
+      </section>
+
+      {/* Right section */}
+      <section className=" overflow-x-auto flex justify-between gap-4 px-4  w-full pr-10">
+        <WeatherDetails {...props} />
       </section>
     </Container>
   );
