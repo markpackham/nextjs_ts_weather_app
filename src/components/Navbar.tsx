@@ -10,6 +10,12 @@ type Props = {};
 
 export default function Navbar({}: Props) {
   const [city, setCity] = useState("");
+  // In case what we're looking for isn't found
+  const [error, setError] = useState("");
+
+  // Search suggestions
+  const [suggestions, setSuggestions] = useState<string[]>([]);
+  const [showSuggestions, setShowSuggestions] = useState(false);
 
   // Search
   function handleSubmitSearch() {}
