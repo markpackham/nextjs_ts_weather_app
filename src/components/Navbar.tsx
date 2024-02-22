@@ -112,18 +112,21 @@ export default function Navbar({ location }: Props) {
           <MdWbSunny className="text-3xl mt-1 text-yellow-300" />
         </div>
         <section className="flex gap-2 items-center">
-          <span>Click on target to get location data &rarr;</span>
+          <span className="text-sm ml-1">
+            Click on target to get location data &rarr;
+          </span>
           <MdMyLocation
             title="Your current location"
             onClick={handleCurrentLocation}
             className="text-2xl text-gray-400 hover:opacity-80 cursor-pointer"
           />
+
           <MdOutlineLocationOn className="text-3xl" />
           {/* "text-slate-900/80" the last part means means giving an opacity of 80 */}
           <p className="text-slate-900/80 text-sm">{location} </p>
 
-          {/* Search Box */}
-          <div className="relative">
+          {/* Search Box - hide it on mobile */}
+          <div className="relative hidden md:flex">
             <SearchBox
               value={city}
               onSubmit={handleSubmitSearch}
